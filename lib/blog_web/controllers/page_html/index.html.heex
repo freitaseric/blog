@@ -1,0 +1,52 @@
+<div class="min-h-screen bg-gradient-to-br from-base-100 to-base-300">
+  <div class="container mx-auto max-w-4xl p-4">
+    <div class="hero py-20">
+      <div class="hero-content text-center">
+        <div>
+          <h1 class="text-5xl font-bold mb-4">Blog</h1>
+          
+          <p class="text-lg text-base-content/70">Bem-vindo ao meu blog pessoal</p>
+        </div>
+      </div>
+    </div>
+    
+    <%= if Enum.empty?(@posts) do %>
+      <div class="alert alert-info">
+        <svg class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          >
+          </path>
+        </svg> <span>Nenhum post publicado ainda. Volte em breve!</span>
+      </div>
+    <% else %>
+      <div class="grid gap-6">
+        <%= for post <- @posts do %>
+          <div class="card bg-primary text-primary-content shadow-xl hover:shadow-2xl transition-shadow">
+            <div class="card-body">
+              <h2 class="card-title text-2xl">
+                <.link href={~p"/posts/#{post}"} class="link link-hover">{post.title}</.link>
+              </h2>
+              
+              <p class="text-sm text-primary-content/60 mb-3">
+                {Calendar.strftime(post.published_at, "%d de %B de %Y")}
+              </p>
+              
+              <p class="text-primary-content/80 mb-4">
+                {String.slice(post.content, 0..150)}{if String.length(post.content) > 150,
+                  do: "..."}
+              </p>
+              
+              <div class="card-actions justify-end">
+                <.link href={~p"/posts/#{post}"} class="btn btn-sm">Leia mais</.link>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

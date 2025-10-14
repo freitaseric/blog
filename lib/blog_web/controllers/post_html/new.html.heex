@@ -1,0 +1,50 @@
+<div class="container mx-auto max-w-2xl p-4">
+  <h1 class="text-3xl font-bold mb-6">Novo Post</h1>
+  
+  <.form :let={_f} for={@changeset} action={~p"/posts"} class="space-y-4">
+    <%= if @changeset.action do %>
+      <div class="alert alert-error">
+        <i class="hero-x-circle"></i>
+        <div>
+          <h3 class="font-bold">Oops! Algo deu errado</h3>
+          
+          <div class="text-xs">Por favor, confira os erros abaixo.</div>
+          
+          <%= if @changeset.errors[:title] do %>
+            <p class="text-sm"><strong>Título:</strong> {@changeset.errors[:title] |> elem(0)}</p>
+          <% end %>
+          
+          <%= if @changeset.errors[:content] do %>
+            <p class="text-sm">
+              <strong>Conteúdo:</strong> {@changeset.errors[:content] |> elem(0)}
+            </p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    
+    <fieldset class="fieldset bg-base-200 border-base-300 rounded-box border p-4">
+      <label class="label">Título</label>
+      <input
+        type="text"
+        name="post[title]"
+        value={@changeset.data.title}
+        class="input w-full"
+        placeholder="Digite o título..."
+      />
+      <label class="label">Conteúdo</label> <textarea
+        name="post[content]"
+        rows="12"
+        class="textarea font-mono w-full"
+        placeholder="Digite o conteúdo..."
+      ><%= @changeset.data.content %></textarea>
+      <label class="label">Publicado em (deixe em branco para rascunho)</label>
+      <input type="datetime-local" name="post[published_at]" class="input w-full" />
+    </fieldset>
+    
+    <div class="card-actions justify-end gap-2">
+      <button type="submit" class="btn btn-primary">Salvar</button>
+      <a href={~p"/posts"} class="btn btn-outline">Cancelar</a>
+    </div>
+  </.form>
+</div>

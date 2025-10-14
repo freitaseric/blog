@@ -1,0 +1,45 @@
+<div class="container mx-auto max-w-2xl p-4">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold">Painel de Posts</h1>
+    <a href={~p"/posts/new"} class="btn btn-primary">
+      <i class="hero-plus-circle"></i> Novo Post
+    </a>
+  </div>
+
+  <%= if Enum.empty?(@posts) do %>
+    <div class="alert alert-info">
+      <i class="hero-information-circle"></i>
+      <span>Nenhum post ainda. Crie um para começar!</span>
+    </div>
+  <% else %>
+    <div class="space-y-3">
+      <%= for post <- @posts do %>
+        <div class="card bg-base-200 shadow-lg">
+          <div class="card-body">
+            <h2 class="card-title text-xl">
+              <a href={~p"/posts/#{post}"} class="link link-hover">
+                {post.title}
+              </a>
+            </h2>
+            <p class="text-sm text-base-content/60">
+              {Calendar.strftime(post.inserted_at, "%d/%m/%Y %H:%M")}
+            </p>
+            <div class="card-actions justify-end">
+              <a href={~p"/posts/#{post}/edit"} class="btn btn-sm btn-outline btn-info">
+                Editar
+              </a>
+              <a
+                href={~p"/posts/#{post}"}
+                method="delete"
+                data-confirm="Tem certeza?"
+                class="btn btn-sm btn-outline btn-error"
+              >
+                Deletar
+              </a>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
