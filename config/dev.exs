@@ -2,14 +2,14 @@ import Config
 
 # Configure your database
 config :blog, Blog.Repo,
-  username: "neondb_owner",
-  password: "npg_klSjY3h5fUAB",
-  hostname: "ep-round-silence-acj6dpmf.sa-east-1.aws.neon.tech",
-  database: "neondb",
+  username: System.get_env("DB_USERNAME", "postgres"),
+  password: System.get_env("DB_PASSWORD", "postgres"),
+  hostname: System.get_env("DB_HOSTNAME", "localhost"),
+  database: System.get_env("DB_NAME", "blog_dev"),
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10,
-  ssl: true
+  ssl: String.to_atom(System.get_env("DB_SSL", "false"))
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -24,7 +24,7 @@ config :blog, BlogWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "QWOt7dSY5bsi6cwcfuKkweU8nmmY1L/lGM/mmsd5L89Lx2lgs9osCil1T5lTMd4y",
+  secret_key_base: System.get_env("SECRET_KEY_BASE", "dev_key_change_in_production"),
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:blog, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:blog, ~w(--watch)]}
