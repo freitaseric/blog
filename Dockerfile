@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
 COPY mix.exs mix.lock ./
 COPY config config
 
-RUN mix local.hex --force \
+RUN mix local.hex --force && \
   mix local.rebar --force
 
 RUN export SECRET_KEY_BASE=$(mix phx.gen.secret) 
