@@ -1,11 +1,12 @@
 import Config
 
+database_url =
+  System.get_env("DATABASE_URL") ||
+    raise "environment variable DATABASE_URL is missing"
+
 # Configure your database
 config :blog, Blog.Repo,
-  username: System.get_env("DB_USERNAME", "postgres"),
-  password: System.get_env("DB_PASSWORD", "postgres"),
-  hostname: System.get_env("DB_HOSTNAME", "localhost"),
-  database: System.get_env("DB_NAME", "blog_dev"),
+  url: database_url,
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10,
