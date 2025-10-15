@@ -17,10 +17,11 @@ if config_env() == :prod do
     System.get_env("SECRET_KEY_BASE") ||
       raise "environment variable SECRET_KEY_BASE is missing"
 
+  host = System.get_env("RENDER_EXTERNAL_HOSTNAME") || "localhost"
   port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :blog, BlogWeb.Endpoint,
-    url: [host: "localhost", port: port],
+    url: [host: host, port: port],
     http: [
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: port

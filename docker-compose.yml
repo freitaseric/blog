@@ -1,9 +1,0 @@
-services:
-  app:
-    build: .
-    image: blog-phoenix
-    container_name: blog_app
-    ports:
-      - "4000:4000"
-    env_file:
-      - .env
