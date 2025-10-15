@@ -2,12 +2,11 @@ import Config
 
 # Database
 config :blog, Blog.Repo,
-  username: System.get_env("DB_USERNAME", "postgres"),
-  password: System.get_env("DB_PASSWORD", "postgres"),
-  hostname: System.get_env("DB_HOSTNAME", "localhost"),
-  database: System.get_env("DB_NAME", "blog_prod"),
-  ssl: String.to_atom(System.get_env("DB_SSL", "false")),
-  pool_size: String.to_integer(System.get_env("POOL_SIZE", "10"))
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "blog_prod",
+  pool_size: "10"
 
 # Endpoint
 config :blog, BlogWeb.Endpoint,
