@@ -2,6 +2,8 @@ FROM elixir:1.18.4-slim AS base
 
 FROM base AS builder
 
+ENV MIX_ENV=prod
+
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
@@ -21,13 +23,18 @@ RUN mix phx.gen.cert blog blog.local blog.freitaseric.com
 COPY . .
 
 RUN mix deps.get --only prod
-RUN MIX_ENV=prod mix compile
-RUN MIX_ENV=prod mix assets.deploy
+RUN mix compile
+RUN mix assets.deploy
 
 FROM base AS runtime
+
+ENV MIX_ENV=PROD
+
+RUN mix ecto.migrate
 
 WORKDIR /app
 
 EXPOSE 4000
 
-CMD ["MIX_ENV=prod", "mix", "phx.server"]
+
+CMD ["mix", "phx.server"]

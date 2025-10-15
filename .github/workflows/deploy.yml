@@ -30,10 +30,6 @@ jobs:
         run: |
           sleep 10
 
-      - name: Run migrations
-        run: |
-          docker compose exec -T blog mix ecto.migrate
-
       - name: Check container status
         run: |
           docker compose ps
