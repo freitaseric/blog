@@ -18,7 +18,7 @@ RUN mix local.hex --force && \
   mix local.rebar --force && \
   mix deps.get
 
-RUN mix help phx.gen.cert blog blog.local blog.freitaseric.com
+RUN mix phx.gen.cert blog blog.local blog.freitaseric.com
 
 COPY . .
 
