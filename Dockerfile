@@ -34,7 +34,8 @@ RUN mix ecto.migrate
 
 WORKDIR /app
 
-EXPOSE 4000
+COPY --from=builder . .
 
+EXPOSE 4000
 
 CMD ["mix", "phx.server"]
