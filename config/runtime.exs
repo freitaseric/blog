@@ -33,7 +33,7 @@ if config_env() == :prod do
     url: [host: "localhsot", port: 4000],
     http: [
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: port
+      port: 4000
     ],
     secret_key_base: secret_key_base
 end
