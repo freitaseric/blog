@@ -21,8 +21,6 @@ RUN mix local.hex --force && \
 
 RUN export SECRET_KEY_BASE=$(mix phx.gen.secret) 
 
-RUN mix phx.gen.cert blog blog.local blog.freitaseric.com
-
 COPY . .
 
 RUN mix deps.get --only prod
