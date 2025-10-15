@@ -28,7 +28,7 @@ jobs:
       - name: Run Ecto Migrations
         run: |
           sleep 15
-          docker-compose exec -T app /app/bin/blog eval "Blog.Release.migrate"
+          docker compose exec -T app /app/bin/blog eval "Blog.Release.migrate"
 
       - name: Clean up old Docker images
         run: docker image prune -f
