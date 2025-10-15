@@ -3,32 +3,7 @@ services:
     build: .
     image: blog-phoenix
     container_name: blog_app
-    networks:
-      - blog_network
     ports:
       - "4000:4000"
-    depends_on:
-      - db
     env_file:
       - .env
-
-  db:
-    image: postgres:16-alpine
-    container_name: blog_db
-    networks:
-      - blog_network
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_USER=${DB_USERNAME}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_DB=${DB_NAME}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-volumes:
-  postgres_data:
-
-networks:
-  blog_network:
-    driver: bridge
