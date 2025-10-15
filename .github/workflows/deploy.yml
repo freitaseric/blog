@@ -18,6 +18,14 @@ jobs:
         run: |
           docker compose down || true
 
+      - name: Setup system
+        run: |
+          wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb
+          sudo dpkg -i erlang-solutions_2.0_all.deb
+
+          sudo apt update
+          sudo apt install elixir
+
       - name: Prepare environment
         run: |
           SECRET_KEY=$(mix phx.gen.secret)
