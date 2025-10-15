@@ -16,14 +16,11 @@ jobs:
 
       - name: Create .env file from GitHub Secrets
         run: |
-          echo "DATABASE_URL=ecto://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@${{ secrets.DB_HOSTNAME }}/${{ secrets.DB_NAME }}?sslmode=require&channel_binding=require" >> .env
+          echo "DATABASE_URL=ecto://${{ secrets.DB_USERNAME }}:${{ secrets.DB_PASSWORD }}@${{ secrets.DB_HOSTNAME }}/${{ secrets.DB_NAME }}" >> .env
           echo "SECRET_KEY_BASE=${{ secrets.SECRET_KEY_BASE }}" >> .env
 
-      - name: Build containers
-        run: docker compose build --no-cache
-
-      - name: Start containers
-        run: docker compose up -d
+      - name: Build and start containers
+        run: docker compose up -d --build
 
       - name: Run Ecto Migrations
         run: |
