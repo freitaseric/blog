@@ -24,7 +24,8 @@ defmodule Blog.Release do
 
   defp load_app do
     # Many platforms require SSL when connecting to the database
-    Application.ensure_all_started(:ssl)
+    # but my local server don't require
+    # Application.ensure_all_started(:ssl)
     Application.ensure_loaded(@app)
   end
 end
