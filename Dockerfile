@@ -17,13 +17,15 @@ COPY config config
 RUN mix local.hex --force && \
   mix local.rebar --force
 
-RUN export SECRET_KEY_BASE=$(mix phx.gen.secret) 
-
 COPY . .
+
+ENV SECRET_KEY_BASE=RqECyPC8LVJO+Wby+P/yIaj5gYKQRGFrdPnXhzIKlekE8rRUxnX4UQ766nm84OHI
 
 RUN mix deps.get --only prod
 RUN mix compile
 RUN mix assets.deploy
+
+ENV DATABASE_URL=ecto://postgres:postgres@localhost/blog_prod
 
 RUN mix ecto.migrate
 

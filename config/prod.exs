@@ -1,13 +1,5 @@
 import Config
 
-# Database
-config :blog, Blog.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "blog_prod",
-  pool_size: "10"
-
 # Endpoint
 config :blog, BlogWeb.Endpoint,
   url: [host: System.get_env("URL_HOST", "localhost"), port: 80],
