@@ -16,7 +16,12 @@ config :blog, BlogWeb.Endpoint,
     port: String.to_integer(System.get_env("PORT", "4000")),
     transport_options: [socket_opts: [:inet6]]
   ],
-  secret_key_base: System.get_env("SECRET_KEY_BASE"),
+  https: [
+    port: 4001,
+    cipher_suite: :strong,
+    keyfile: "priv/cert/selfsigned_key.pem",
+    certfile: "priv/cert/selfsigned.pem"
+  ],
   server: true
 
 # Logging
