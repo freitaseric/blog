@@ -1,6 +1,4 @@
-FROM elixir:1.18.4-slim AS base
-
-FROM base AS builder
+FROM elixir:1.18.4-slim
 
 ENV MIX_ENV=prod
 
@@ -26,14 +24,6 @@ COPY . .
 RUN mix deps.get --only prod
 RUN mix compile
 RUN mix assets.deploy
-
-FROM base AS runtime
-
-ENV MIX_ENV=PROD
-
-WORKDIR /app
-
-COPY --from=builder . .
 
 RUN mix ecto.migrate
 
