@@ -30,11 +30,11 @@ FROM base AS runtime
 
 ENV MIX_ENV=PROD
 
-RUN mix ecto.migrate
-
 WORKDIR /app
 
 COPY --from=builder . .
+
+RUN mix ecto.migrate
 
 EXPOSE 4000
 
