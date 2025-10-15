@@ -18,18 +18,28 @@ jobs:
         run: |
           docker compose down || true
 
+      - name: Prepare environment
+        run: |
+          SECRET_KEY=$(mix phx.gen.secret)
+
+          export SECRET_KEY_BASE=${SECRET_KEY}
+
+      - name: Load dependencies to compile code and assets
+        run: |
+          mix deps.get --only prod
+          MIX_ENV=prod mix compile
+          MIX_ENV=prod mix assets.deploy
+
+      - name: Generate release
+        run: |
+          mix phx.gen.release --docker
+
       - name: Build Docker image
         run: |
-          set -a
-          [ -f /home/blog/.env.local ] && . /home/blog/.env.local
-          set +a
           docker compose build --no-cache
 
       - name: Start containers
         run: |
-          set -a
-          [ -f /home/blog/.env.local ] && . /home/blog/.env.local
-          set +a
           docker compose up -d
 
       - name: Wait for services to be ready
