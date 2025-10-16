@@ -7,12 +7,12 @@
 # General application configuration
 import Config
 
-config :test_app,
+config :blog,
   ecto_repos: [Blog.Repo],
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
-config :test_app, BlogWeb.Endpoint,
+config :blog, BlogWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
@@ -29,12 +29,12 @@ config :test_app, BlogWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :test_app, Blog.Mailer, adapter: Swoosh.Adapters.Local
+config :blog, Blog.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.25.4",
-  test_app: [
+  blog: [
     args:
       ~w(js/app.js --bundle --target=es2022 --outdir=../priv/static/assets/js --external:/fonts/* --external:/images/* --alias:@=.),
     cd: Path.expand("../assets", __DIR__),
@@ -44,7 +44,7 @@ config :esbuild,
 # Configure tailwind (the version is required)
 config :tailwind,
   version: "4.1.10",
-  test_app: [
+  blog: [
     args: ~w(
       --input=assets/css/app.css
       --output=priv/static/assets/css/app.css
