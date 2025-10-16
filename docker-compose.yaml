@@ -7,7 +7,7 @@ services:
     env_file:
       - ".env"
     ports:
-      - "${PORT}:${PORT}"
+      - "${PORT:-4000}:${PORT:-4000}"
     networks:
       - blog_app_network
   

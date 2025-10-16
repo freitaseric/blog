@@ -21,6 +21,7 @@ jobs:
           echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }} >> .env"
           echo "DATABASE_URL=ecto://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@db/${{ secrets.POSTGRES_DB }} >> .env"
           echo "SECRET_KEY_BASE=${{ secrets.SECRET_KEY_BASE }} >> .env"
+          echo "PHX_HOST=localhost >> .env"
           echo "PORT=4000 >> .env"
 
       - name: Stop and remove old containers
