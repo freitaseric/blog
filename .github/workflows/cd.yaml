@@ -1,0 +1,36 @@
+name: Continous Deployment
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: |
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env"
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env"
+          echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }} >> .env"
+          echo "DATABASE_URL=ecto://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@db/${{ secrets.POSTGRES_DB }} >> .env"
+          echo "SECRET_KEY_BASE=${{ secrets.SECRET_KEY_BASE }} >> .env"
+          echo "PORT=4000 >> .env"
+
+      - name: Stop and remove old containers
+        run: |
+          docker compose down || true
+
+      - name: Build Docker image
+        run: |
+          docker compose build --no-cache
+
+      - name: Start containers
+        run: |
+          docker compose up -d

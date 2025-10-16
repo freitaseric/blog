@@ -1,16 +1,14 @@
 import Config
 
-database_url =
-  System.get_env("DATABASE_URL") ||
-    raise "environment variable DATABASE_URL is missing"
-
 # Configure your database
-config :blog, Blog.Repo,
-  url: database_url,
+config :test_app, Blog.Repo,
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "test_app_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10,
-  ssl: true
+  pool_size: 10
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -18,17 +16,17 @@ config :blog, Blog.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we can use it
 # to bundle .js and .css sources.
-config :blog, BlogWeb.Endpoint,
+config :test_app, BlogWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: String.to_integer(System.get_env("PORT") || "4000")],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: System.get_env("SECRET_KEY_BASE", "dev_key_change_in_production"),
+  secret_key_base: "1fhkBA6VYP1AlLCizyHFbR5Uv+sQdNKBiev9EMb4+uIjIF7q4GfKbyHGKUaRvLgH",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:blog, ~w(--sourcemap=inline --watch)]},
-    tailwind: {Tailwind, :install_and_run, [:blog, ~w(--watch)]}
+    esbuild: {Esbuild, :install_and_run, [:test_app, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:test_app, ~w(--watch)]}
   ]
 
 # ## SSL Support
@@ -55,18 +53,18 @@ config :blog, BlogWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :blog, BlogWeb.Endpoint,
+config :test_app, BlogWeb.Endpoint,
   live_reload: [
     web_console_logger: true,
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/blog_web/(?:controllers|live|components|router)/?.*\.(ex|heex)$"
+      ~r"lib/test_app_web/(?:controllers|live|components|router)/?.*\.(ex|heex)$"
     ]
   ]
 
 # Enable dev routes for dashboard and mailbox
-config :blog, dev_routes: true
+config :test_app, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :default_formatter, format: "[$level] $message\n"

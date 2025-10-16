@@ -1,0 +1,34 @@
+services:
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - ".env"
+    ports:
+      - "${PORT}:${PORT}"
+    networks:
+      - blog_app_network
+  
+  db:
+    image: postgres:16-alpine
+    env_file:
+      - ".env"
+    networks:
+      - blog_app_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    volumes:
+      - postgres_data:/var/lib/postgres/data
+
+volumes:
+  postgres_data:
+
+networks:
+  blog_app_network:
+    driver: bridge
